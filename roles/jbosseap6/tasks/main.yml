@@ -1,0 +1,64 @@
+---
+
+- name: Create JBoss group
+  group: name={{ jboss_group }} state=present
+  tags:
+    - jbosseap6
+
+- name: Create JBoss log group
+  group: name={{ jboss_log_group }} state=present
+  tags:
+    - jbosseap6
+
+- name: Create JBoss user
+  user: name={{ jboss_user }} groups={{ jboss_group }},{{ jboss_log_group }}  state=present
+
+- name: Create JBoss directories
+  file: path={{ item }} state=directory owner={{ jboss_user }} group={{ jboss_group }} mode=0750
+  with_items:
+    - "{{ jboss_dirs }}"
+  tags:
+    - jbosseap6
+
+- name: Create JBoss instances directories
+  file: path={{ item }} state=directory owner={{ jboss_user }} group={{ jboss_group }} mode=0750
+  with_items:
+
+    - "{{ jboss_instances_dirs }}"
+  tags:
+    - jbosseap6
+
+# - name: Download JBoss to "{{ jboss_temp_dir }}"
+#   get_url:
+#     url: "{{ jboss_download_url }}"
+#     dest: "{{ jboss_temp_dir }}"
+#   tags:
+#     - jbosseap6
+#
+- name: Install augeas
+  yum: name=augeas state=installed
+  tags:
+    - jbosseap6
+
+- name: Install JBoss
+  yum: name='http://192.168.0.14:8000/ING_ISP_jboss6-6.4.0-01.x86_64.rpm-01.x86_64.rpm' state=present
+  tags:
+    - jbosseap6
+
+- name: Copy Jboss standalone configuration to instances
+  copy: src=/opt/jboss/bin/jboss6/standalone/ dest={{ item }} owner={{ jboss_user }} group={{ jboss_group }} mode=0750 force=no
+  with_items:
+    - "{{ jboss_instances_dirs }}"
+  # with_fileglob:
+  #       - /opt/jboss/bin/jboss6/standalone/*
+  tags:
+    - jbosseap6
+    - copy
+
+- name: Configure JBoss using Augeas
+  script: augeas-{{ item }}.sh
+  with_items:
+    - "{{ jboss_instances }}"
+  tags:
+    - jbosseap6
+    - augeas

@@ -1,0 +1,6 @@
+#
+# Sample configuration for Bastion host usage
+# Usage:
+# ansible aws -m ping -k
+#
+#

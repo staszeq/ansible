@@ -1,0 +1,26 @@
+jboss_user: 'jboss'
+jboss_group: 'jboss'
+jboss_log_group: 'jbosslg'
+
+jboss_temp_dir: '/tmp'
+#jboss_download_url: 'http://192.168.0.14:8000/jboss-6.4.0.zip'
+#jboss_download_url: 'http://172.20.10.2:8000/jboss-6.4.0.zip'
+jboss_package_name: 'jboss-6.4.0.zip'
+jboss_install_dir: '/opt/jboss/bin/jboss6/bin'
+
+jboss_dirs:
+  - '/opt/jboss'
+  - '/var/log/jboss'
+  - '/opt/jboss/bin'
+  - '/opt/jboss/bin/jboss6'
+  - '/opt/jboss/instances'
+  - '/opt/jboss/instances/jboss6'
+  - '/opt/jboss/appinout'
+
+jboss_instances:
+  - 'instance01'
+  - 'instance02'
+  
+jboss_instances_dirs:
+  - '/opt/jboss/instances/jboss6/instance01'
+  - '/opt/jboss/instances/jboss6/instance02'

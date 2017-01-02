@@ -1,0 +1,8 @@
+[bastion]
+192.168.0.14 ansible_ssh_user=stachu
+
+[aws]
+ec2-52-58-218-158.eu-central-1.compute.amazonaws.com ansible_ssh_user=centos ansible_ssh_private_key_file=...
+
+[control]
+192.168.0.11 ansible_connection=local
